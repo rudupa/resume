@@ -1,0 +1,33 @@
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Monogram placeholder avatar">
+  <defs>
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5ec2ff"/>
+      <stop offset="100%" stop-color="#2f6fed"/>
+    </linearGradient>
+    <linearGradient id="fill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141b29"/>
+      <stop offset="100%" stop-color="#0c111c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- outer hex frame -->
+  <polygon points="120,10 214,62 214,178 120,230 26,178 26,62"
+           fill="url(#fill)" stroke="url(#ring)" stroke-width="3"/>
+
+  <!-- circuit traces -->
+  <g stroke="#2f6fed" stroke-width="2" fill="none" opacity="0.55">
+    <path d="M26,90 L4,90"/>
+    <circle cx="2" cy="90" r="3" fill="#5ec2ff"/>
+    <path d="M214,150 L236,150"/>
+    <circle cx="238" cy="150" r="3" fill="#5ec2ff"/>
+    <path d="M150,10 L150,-8"/>
+    <circle cx="150" cy="-10" r="3" fill="#5ec2ff"/>
+    <path d="M90,230 L90,248"/>
+    <circle cx="90" cy="250" r="3" fill="#5ec2ff"/>
+  </g>
+
+  <!-- monogram -->
+  <text x="120" y="145" text-anchor="middle"
+        font-family="Inter, Manrope, sans-serif" font-weight="700"
+        font-size="72" fill="#e8ecf3" letter-spacing="2">RU</text>
+</svg>
