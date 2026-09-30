@@ -32,4 +32,4 @@ assets/img/            # avatar placeholder (SVG)
 
 Edit `index.html` directly — sections are Hero, About, Skills, Experience, Projects, Education, Contact.
 
-Two project cards (`OpenEmbedWorks`, `OEW Assist`) are placeholders — search `index.html` for `TODO` and swap in real descriptions before treating this as done.
+Five project cards: three personal (`OpenEmbedWorks`, `OEW Assist`, `OEW Studio`) with intentionally light descriptions, and two drawn from the résumé (radar architecture, VLA/VLM safety layers).

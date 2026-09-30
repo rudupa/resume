@@ -570,15 +570,6 @@ img { max-width: 100%; display: block; }
   margin: 0;
 }
 
-.project-card--placeholder {
-  border-style: dashed;
-}
-
-.project-placeholder-note {
-  font-style: italic;
-  color: var(--text-muted) !important;
-}
-
 /* ==========================================================================
    Education
    ========================================================================== */
