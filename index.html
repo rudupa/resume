@@ -1,0 +1,292 @@
+<!doctype html>
+<!--
+  data-theme is set to "dark" here so the page paints correctly on the very
+  first frame (no flash of light theme before theme.js runs).
+-->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ritesh — Software Architect, ADAS &amp; Embedded Systems</title>
+<meta name="description" content="Ritesh — Software Architect specializing in ADAS and embedded systems.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230a0e16'/%3E%3Ctext x='12' y='17' text-anchor='middle' font-family='Arial' font-weight='700' font-size='13' fill='%232f7dff'%3ER%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Subtle geometric background: a faint grid plus two soft accent glows. Purely decorative. -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--one" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow--two" aria-hidden="true"></div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">R<span class="accent">.</span>U</a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#education" class="nav-link">Education</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle dark or light theme">
+          <!-- sun / moon glyphs; visibility swapped purely with CSS based on data-theme -->
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
+          </svg>
+        </button>
+
+        <button id="navToggle" class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== Hero ===== -->
+    <section id="home" class="hero reveal">
+      <div class="hero-text">
+        <p class="eyebrow">Hi, I&rsquo;m</p>
+        <h1 class="hero-name">Ritesh<span class="accent">.</span></h1>
+        <p class="hero-subtitle">Software Architect &mdash; ADAS &amp; Embedded Systems</p>
+        <p class="hero-tagline">
+          I design system software for radar, perception, and vehicle-compute platforms &mdash;
+          13+ years turning safety-critical requirements into shipped, scalable architecture.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        </div>
+        <ul class="hero-social">
+          <li><a href="mailto:riteshudupak@gmail.com" aria-label="Email">Email</a></li>
+          <li><a href="https://www.linkedin.com/in/ritesh-udupa-4b694619" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a></li>
+          <li><a href="https://github.com/rudupa" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a></li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-ring" aria-hidden="true"></div>
+        <img src="assets/img/avatar-placeholder.svg" alt="" class="hero-avatar" width="240" height="240">
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section id="about" class="section reveal">
+      <h2 class="section-title"><span class="section-index">01</span> About Me</h2>
+      <div class="section-body about-body">
+        <p>
+          I&rsquo;m an embedded software architect with 13+ years of experience building
+          system software for radar/ADAS, powertrain, and high-performance automotive
+          compute platforms. My background spans embedded C/C++, Linux, AUTOSAR, multicore
+          SoCs, and safety-critical development.
+        </p>
+        <p>
+          I care about architecting platforms that scale &mdash; middleware and interfaces that
+          hold up across product generations &mdash; and about the people side of that: leading
+          cross-functional teams, and working directly with OEMs and silicon partners on
+          next-generation vehicle compute and sensor systems.
+        </p>
+        <p>
+          More recently I&rsquo;ve been pulled toward the edge of that world &mdash; running local
+          inference on platforms like the NVIDIA Jetson AGX Thor, and building agentic
+          engineering tools (I call it &ldquo;vibe coding&rdquo;) that power CI/CT automation and
+          chat-driven project assistants. I&rsquo;m also exploring what AI-native IDEs look like
+          day to day, and on the automotive side, working on VLA and VLM models for autonomous
+          driving and how to wrap them in safety layers that keep deterministic systems
+          predictable even as the cognitive layer around them gets less so.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== Skills ===== -->
+    <section id="skills" class="section reveal">
+      <h2 class="section-title"><span class="section-index">02</span> Skills</h2>
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <h3>ADAS &amp; Autonomous Systems</h3>
+          <ul>
+            <li>Radar, camera &amp; lidar integration</li>
+            <li>SOA, Ethernet comms, time sync</li>
+            <li>Perception &amp; tracking interfaces</li>
+            <li>Vehicle compute &amp; networking</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <h3>Embedded Systems</h3>
+          <ul>
+            <li>Bootloaders, drivers, BSP</li>
+            <li>Multicore &amp; SoC architecture</li>
+            <li>Memory, power &amp; resource management</li>
+            <li>System-level debug &amp; performance tuning</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <h3>Simulation &amp; Automotive Tooling</h3>
+          <ul>
+            <li>Virtual ECUs (SIL/HIL), QEMU</li>
+            <li>ROS, Gazebo, MATLAB, Python</li>
+            <li>Synopsys Virtualizer, VLAB, VEOS</li>
+            <li>Trace32, CANoe, Docker, CI/CD</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <h3>AI-Native Engineering &amp; Edge AI</h3>
+          <ul>
+            <li>Local inference on edge platforms (Jetson AGX Thor)</li>
+            <li>Agentic engineering tooling &amp; &ldquo;vibe coding&rdquo; workflows</li>
+            <li>VLA / VLM integration &amp; safety-layer design</li>
+            <li>AI-native IDEs &amp; LLM-driven tooling</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <h3>Leadership &amp; Collaboration</h3>
+          <ul>
+            <li>Product ownership &amp; feature rollout</li>
+            <li>Cross-functional &amp; global team leadership</li>
+            <li>OEM / supplier technical interface</li>
+            <li>PoC &amp; customer demos</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== Experience ===== -->
+    <section id="experience" class="section reveal">
+      <h2 class="section-title"><span class="section-index">03</span> Experience</h2>
+
+      <div class="timeline">
+
+        <article class="timeline-item">
+          <div class="timeline-marker" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <p class="timeline-dates">May 2022 &ndash; Present</p>
+            <h3>Senior Staff Software Architect</h3>
+            <p class="timeline-org">Aumovio Autonomous Mobility &mdash; MI, USA</p>
+            <ul>
+              <li>Architected system software for Gen 5/6 radar platforms &mdash; improved perception fidelity, scalable ADAS integration, and manufacturability.</li>
+              <li>Owned SOA-based Ethernet comms, time sync, memory/power management, cybersecurity, and safety-critical features.</li>
+              <li>Built internal AI-assisted engineering tools &mdash; FROP-ee (chat-driven project &amp; assistant tooling) and RigOps (CI/CT automation) &mdash; to accelerate team workflows.</li>
+              <li>Advanced hybrid safety models for explainable VLA/VLM &amp; LLM integration into deterministic systems.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="timeline-item">
+          <div class="timeline-marker" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <p class="timeline-dates">Feb 2013 &ndash; May 2022</p>
+            <h3>Sys Engineer &rarr; SW Architect &rarr; Senior SW Architect &rarr; Technical Expert</h3>
+            <p class="timeline-org">Continental Automotive Systems &mdash; MI, USA</p>
+            <ul>
+              <li>Led software architecture for multiple production ECM programs, ensuring AUTOSAR &amp; ISO 26262 compliance.</li>
+              <li>Owned end-to-end architecture definition from requirements through release, across acquisition to SOP.</li>
+              <li>Directed the Virtual ECU project, coordinating 15+ engineers across five global sites.</li>
+              <li>Served as main OEM technical interface for supercharger &amp; e-thermostat advanced development.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="timeline-item">
+          <div class="timeline-marker" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <p class="timeline-dates">Feb 2010 &ndash; Jan 2013</p>
+            <h3>SharePoint Developer &rarr; Software Team Lead</h3>
+            <p class="timeline-org">ToThePoint Pte Ltd &mdash; Bangalore, IN</p>
+            <ul>
+              <li>Developed, tested, and delivered .NET and SharePoint web applications, including an iOS web view for Singapore clients.</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section id="projects" class="section reveal">
+      <h2 class="section-title"><span class="section-index">04</span> Projects</h2>
+      <div class="projects-grid">
+
+        <article class="project-card">
+          <div class="project-card-tag">ADAS Architecture</div>
+          <h3>Gen 5/6 Radar Platform</h3>
+          <p>
+            System software architecture for next-generation automotive radar &mdash;
+            SOA-based Ethernet communication, time synchronization, and safety-critical
+            memory/power management, built for scalable ADAS integration across platform
+            generations.
+          </p>
+        </article>
+
+        <article class="project-card">
+          <div class="project-card-tag">AI Safety / ADAS</div>
+          <h3>Safety Layers for VLA/VLM Autonomy</h3>
+          <p>
+            Hybrid safety models for predictable, explainable integration of VLA and VLM
+            cognitive AI into deterministic automotive systems.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== Education ===== -->
+    <section id="education" class="section reveal">
+      <h2 class="section-title"><span class="section-index">05</span> Education</h2>
+      <div class="education-grid">
+        <div class="edu-card">
+          <h3>MS, Computer Engineering</h3>
+          <p>Michigan Technological University, US &mdash; 2012 &middot; GPA 3.72</p>
+        </div>
+        <div class="edu-card">
+          <h3>BE, Electronics &amp; Communication</h3>
+          <p>VTU, India &mdash; 2009 &middot; GPA 3.83</p>
+        </div>
+      </div>
+      <p class="certifications">
+        <strong>Courses &amp; Certifications:</strong> Data Science, GCP, Self-Driving Car, Advanced Control Systems, Leadership, Communication
+      </p>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact" class="section reveal">
+      <h2 class="section-title"><span class="section-index">06</span> Contact</h2>
+      <div class="contact-card">
+        <p>Based in Rochester Hills, MI. Open to conversations about ADAS, embedded systems, and vehicle compute architecture.</p>
+        <div class="contact-links">
+          <a href="mailto:riteshudupak@gmail.com" class="btn btn-primary">riteshudupak@gmail.com</a>
+          <a href="https://www.linkedin.com/in/ritesh-udupa-4b694619" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+          <a href="https://github.com/rudupa" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Ritesh Udupa. Built with plain HTML, CSS &amp; JS.</p>
+  </footer>
+
+  <script src="assets/js/theme.js" defer></script>
+</body>
+</html>

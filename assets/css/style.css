@@ -1,0 +1,713 @@
+/* ==========================================================================
+   Design tokens
+   Dark theme is the default (matches data-theme="dark" set on <html> in the
+   markup). The [data-theme="light"] block below overrides these for users
+   who toggle it; theme.js persists the choice in localStorage.
+   ========================================================================== */
+
+:root {
+  --bg: #0a0e16;
+  --bg-elevated: #10151f;
+  --surface: #131a26;
+  --surface-hover: #182131;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  --text-primary: #e9edf5;
+  --text-secondary: #a3adc2;
+  --text-muted: #6b7488;
+
+  --accent: #2f7dff;
+  --accent-bright: #5ec2ff;
+  --accent-glow: rgba(47, 125, 255, 0.35);
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --max-width: 1080px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[data-theme="light"] {
+  --bg: #f5f7fb;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-hover: #eef2f9;
+  --border: rgba(15, 23, 42, 0.08);
+  --border-strong: rgba(15, 23, 42, 0.16);
+
+  --text-primary: #12151c;
+  --text-secondary: #4b5565;
+  --text-muted: #757f91;
+
+  --accent: #1c64f2;
+  --accent-bright: #2f7dff;
+  --accent-glow: rgba(28, 100, 242, 0.18);
+}
+
+/* ==========================================================================
+   Reset & base
+   ========================================================================== */
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth; /* CSS-level smooth scroll; theme.js also drives it for the offset header */
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: "Inter", "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+img { max-width: 100%; display: block; }
+
+/* ==========================================================================
+   Geometric background
+   A faint fixed grid plus two soft radial glows behind all content. Pure
+   CSS, no images — keeps the page premium-looking without extra assets.
+   ========================================================================== */
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  opacity: 0.5;
+}
+
+.bg-glow {
+  position: fixed;
+  z-index: -1;
+  width: 60vw;
+  height: 60vw;
+  max-width: 800px;
+  max-height: 800px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.bg-glow--one {
+  top: -20%;
+  right: -10%;
+  background: var(--accent);
+}
+
+.bg-glow--two {
+  bottom: -10%;
+  left: -15%;
+  background: var(--accent-bright);
+  opacity: 0.15;
+}
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--bg) 75%, transparent);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.nav-logo {
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+}
+
+.accent { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-link {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.2s var(--ease);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.25s var(--ease);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--text-primary);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.icon-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.icon { width: 18px; height: 18px; }
+
+/* Sun/moon swap: dark theme shows the sun (click to go light), light theme shows the moon. */
+.icon-moon { display: none; }
+:root[data-theme="light"] .icon-sun { display: none; }
+:root[data-theme="light"] .icon-moon { display: block; }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  margin: 0 auto;
+  background: var(--text-primary);
+  transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+
+/* ==========================================================================
+   Layout helpers
+   ========================================================================== */
+
+.section {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 96px 24px;
+}
+
+.section-title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 40px;
+}
+
+.section-index {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+
+.section-body p { color: var(--text-secondary); }
+.section-body p + p { margin-top: 16px; }
+
+/* ==========================================================================
+   Reveal-on-scroll animation
+   theme.js toggles .in-view via IntersectionObserver; this is the only
+   thing that changes state — the transition itself lives entirely in CSS.
+   ========================================================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #ffffff;
+  box-shadow: 0 0 0 0 var(--accent-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 96px 24px 64px;
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  align-items: center;
+  gap: 48px;
+  min-height: 80vh;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  margin: 0 0 12px;
+}
+
+.hero-name {
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.05;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 12px 0 20px;
+}
+
+.hero-tagline {
+  max-width: 52ch;
+  color: var(--text-secondary);
+  margin: 0 0 32px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.hero-social {
+  display: flex;
+  gap: 20px;
+}
+
+.hero-social a {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: color 0.2s var(--ease);
+}
+
+.hero-social a:hover { color: var(--accent); }
+
+.hero-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.hero-ring {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  border: 1px dashed var(--border-strong);
+  animation: spin 40s linear infinite;
+}
+
+.hero-avatar {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  filter: drop-shadow(0 0 40px var(--accent-glow));
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Skills
+   ========================================================================== */
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.skill-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.skill-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.skill-card h3 {
+  margin: 0 0 14px;
+  font-size: 1rem;
+}
+
+.skill-card ul li {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  padding: 5px 0;
+  border-top: 1px solid var(--border);
+}
+
+.skill-card ul li:first-child { border-top: none; }
+
+/* ==========================================================================
+   Experience timeline
+   ========================================================================== */
+
+.timeline {
+  position: relative;
+  padding-left: 32px;
+  border-left: 2px solid var(--border);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 48px;
+}
+
+.timeline-item:last-child { padding-bottom: 0; }
+
+.timeline-marker {
+  position: absolute;
+  left: -39px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.timeline-dates {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin: 0 0 6px;
+}
+
+.timeline-content h3 {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+}
+
+.timeline-org {
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin: 0 0 12px;
+}
+
+.timeline-content ul li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  margin-bottom: 8px;
+}
+
+.timeline-content ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-bright);
+}
+
+/* ==========================================================================
+   Projects
+   Hover tilt transform (rotateX/rotateY) is applied inline by theme.js
+   based on cursor position; the transition/easing for it lives here so the
+   motion stays smooth without JS having to manage timing.
+   ========================================================================== */
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  transform-style: preserve-3d;
+  transition: transform 0.15s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  will-change: transform;
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+.project-card-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-glow);
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.project-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+}
+
+.project-card p {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Education
+   ========================================================================== */
+
+.education-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.edu-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+
+.edu-card h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.edu-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.certifications {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.certifications strong { color: var(--text-primary); }
+
+/* ==========================================================================
+   Contact
+   ========================================================================== */
+
+.contact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px;
+  text-align: center;
+}
+
+.contact-card > p {
+  color: var(--text-secondary);
+  max-width: 50ch;
+  margin: 0 auto 28px;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+  text-align: center;
+  padding: 32px 24px 48px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding-top: 64px;
+  }
+
+  .hero-actions,
+  .hero-social {
+    justify-content: center;
+  }
+
+  .hero-visual { order: -1; }
+}
+
+@media (max-width: 720px) {
+  .nav-links {
+    position: fixed;
+    top: 73px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    background: var(--bg-elevated);
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-150%);
+    opacity: 0;
+    transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+
+  .nav-links.open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .nav-links a {
+    width: 100%;
+    padding: 16px 0;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-toggle { display: flex; }
+
+  /* Hamburger -> X when menu is open (class toggled by theme.js) */
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}
+
+@media (max-width: 480px) {
+  .section { padding: 72px 20px; }
+  .contact-card { padding: 28px 20px; }
+}
+
+/* Respect users who've asked the OS to minimize motion. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
